@@ -23,8 +23,7 @@ const LoginPage = () => {
           id: response.id,
           name: response.name,
           email: response.email,
-          saldo: response.saldo
-
+          saldo: response.saldo,
         };
         localStorage.setItem("user", JSON.stringify(userData));
         alert("Login Berhasil");
@@ -89,6 +88,9 @@ const LoginPage = () => {
                 Sign Up
               </Link>
             </p>
+            <div className="flex mt-5 items-center gap-x-2">
+              <Link to="/" className="text-sm font-semibold underline">Back</Link>
+            </div>
           </div>
         </div>
       </div>

@@ -1,58 +1,56 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IoPersonSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../additional/Currency.js";
+import { IoPersonSharp } from "react-icons/io5";
 
 const Account = () => {
+  const navigate = useNavigate();
   const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    if (!storedUser) {
+      navigate("/login");
+    }
+  }, [storedUser, navigate]);
+
   const [user, setUser] = useState(storedUser || { name: "", saldo: 0 });
 
   console.log("Saldo dari localStorage:", user.saldo);
-
-  // useEffect(() => {
-  //   if (storedUser) {
-  //     axios
-  //       .get(`http://localhost:3000/user/profile/${storedUser.id}`)
-  //       .then((res) => {
-  //         console.log("Saldo dari server:", res.data.saldo);
-
-  //         if (res.data.saldo !== user.saldo) {
-  //           setUser(res.data);
-
-  //           localStorage.setItem(
-  //             "user",
-  //             JSON.stringify({ ...storedUser, saldo: res.data.saldo })
-  //           );
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, []);
   useEffect(() => {
     axios
       .get(`http://localhost:3000/user/profile/${storedUser.id}`)
       .then((res) => {
         console.log("Saldo dari server:", res.data.saldo);
-        setUser((prevUser) => ({ ...prevUser, saldo: res.data.saldo, name: res.data.name }));
-  
+        setUser((prevUser) => ({
+          ...prevUser,
+          saldo: res.data.saldo,
+          name: res.data.name,
+        }));
+
         localStorage.setItem(
           "user",
-          JSON.stringify({ ...storedUser, saldo: res.data.saldo, name: res.data.name })
+          JSON.stringify({
+            ...storedUser,
+            saldo: res.data.saldo,
+            name: res.data.name,
+          })
         );
       })
       .catch((err) => console.log(err));
-  }, [user.saldo]);
-  
+  }, [storedUser]);  // kalo error ganti user.saldo di []
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Apakah kamu yakin ingin logout?");
     if (confirmLogout) {
       localStorage.removeItem("user");
       alert("Logout Berhasil");
-      window.location.href = "/";
+      navigate("/");
     }
   };
+  if (!storedUser) {
+    return null;
+  }
 
   return (
     <div className="w-full h-screen bg-black flex justify-center items-center">

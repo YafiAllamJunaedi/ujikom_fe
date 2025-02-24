@@ -104,6 +104,7 @@ const CheckoutPage = () => {
     }
     try {
       const userData = JSON.parse(localStorage.getItem("user"));
+      console.log("User Data:", userData);
       const response = await axios.post(
         "http://localhost:3000/transaction/process",
         {
@@ -120,7 +121,6 @@ const CheckoutPage = () => {
       console.log("Transaction successful:", response.data);
       alert("Pembayaran Berhasil!");
 
-      // Perbarui saldo user di state dan localStorage
       const updatedUser = { ...userData, saldo: response.data.saldo };
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
@@ -167,7 +167,7 @@ const CheckoutPage = () => {
                 <div className="w-2/4 flex flex-col gap-y-2 items-end">
                   <p className="font-semibold">{TrimmedText(title, 20)}</p>
                   <p className="font-semibold">{quantity}</p>
-                  <p className="font-semibold">{user}</p>
+                  <p className="font-semibold">{user?.name || "user tidak diketahui"}</p>
                   <p className="font-semibold">{new Date().toDateString()}</p>
                   <p className="font-semibold">{formatCurrency(totalPrice)}</p>
                 </div>
