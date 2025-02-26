@@ -70,9 +70,6 @@ const App = () => {
             INTRODUCING OUR COLLECTIONS <br /> TO BRING EVERY JOURNEY IS
             MEMORABLE
           </p>
-          {/* <button className="w-2/6 py-1.5 bg-black text-white ml-13 rounded-xs">
-              SHOP NOW
-            </button> */}
         </div>
         <div className="w-1/2 h-full flex flex-col items-center">
           <img src="/assets/sepatu_atas.png" className="w-[400px]" alt="" />

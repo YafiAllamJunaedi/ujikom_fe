@@ -6,7 +6,6 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from './pages/user/LoginPage.jsx';
 import RegisterPage from './pages/user/RegisterPage.jsx';
-// import Dashboard from './pages/admin/TransactionDashboard.jsx'
 import TransactionDashboard from './pages/admin/TransactionDashboard.jsx';
 import ShoesDashboard from './pages/admin/ShoesDashboard.jsx';
 import CheckoutPage from './pages/user/CheckoutPage.jsx';

@@ -1,7 +1,7 @@
 const discount = [
     {
         id: 1,
-        name: "Nike Samba x Amba FULL BLACK",
+        name: "Nike Samba x Amba",
         price: 15000000,
         image: "/assets/shoes_collection/6.png",
         stock: 2,

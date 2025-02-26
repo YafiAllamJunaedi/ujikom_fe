@@ -16,7 +16,6 @@ const Account = () => {
 
   const [user, setUser] = useState(storedUser || { name: "", saldo: 0 });
 
-  console.log("Saldo dari localStorage:", user.saldo);
   useEffect(() => {
     axios
       .get(`http://localhost:3000/user/profile/${storedUser.id}`)
@@ -38,10 +37,11 @@ const Account = () => {
         );
       })
       .catch((err) => console.log(err));
-  }, [storedUser]);  // kalo error ganti user.saldo di []
+  }, [user.saldo]);  // kalo error ganti user.saldo di []
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Apakah kamu yakin ingin logout?");
+    console.log(confirmLogout)
     if (confirmLogout) {
       localStorage.removeItem("user");
       alert("Logout Berhasil");

@@ -25,22 +25,12 @@ const CheckoutPage = () => {
   const [telephoneNumber, setTelephoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [user, setUser] = useState("");
-  // useEffect(() => {
-  //   const userData = JSON.parse(localStorage.getItem("user"));
-  //   if (userData) {
-  //     const userSaldo = parseInt(userData.saldo) || 0;
-  //     setSaldo(userSaldo);
-  //     setUser(userData.name);
-  //   } else {
-  //     navigate("/login");
-  //   }
-  //   console.log(userData);
-  // }, [navigate]);
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData) {
       setSaldo(userData.saldo);
-      setUser(userData); // Simpan seluruh data user, bukan hanya name
+      setUser(userData);
     } else {
       navigate("/login");
     }
@@ -59,44 +49,7 @@ const CheckoutPage = () => {
     setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
   };
 
-  // const handlePayment = async () => {
-  //   if (saldo < totalPrice) {
-  //     alert("Saldo tidak mencukupi!");
-  //     return;
-  //   }
-  //   try {
-  //     const userData = JSON.parse(localStorage.getItem("user"));
-  //     const response = await axios.post(
-  //       "http://localhost:3000/transaction/process",
-  //       {
-  //         id_user: userData.id,
-  //         id_shoes: id,
-  //         quantity: quantity,
-  //         total: totalPrice,
-  //         telephone_number: telephoneNumber,
-  //         address: address,
-  //         Date: new Date(),
-  //       }
-  //     );
-  //     console.log("Transaction successful:", response.data);
-  //     alert("Pembayaran Berhasil!");
-
-  //     const updatedUser = { ...user, saldo: response.data.saldo };
-  //     localStorage.setItem(
-  //       "user",
-  //       JSON.stringify({ ...storedUser, ...updatedUser })
-  //     );
-
-  //     alert("Transaksi berhasil!");
-  //     setIsPaid(true);
-  //   } catch (error) {
-  //     console.error(
-  //       "Transaction Error:",
-  //       error.response?.data || error.message
-  //     );
-  //     alert(error.response?.data || "Gagal melakukan transaksi");
-  //   }
-  // };
+  
   const handlePayment = async () => {
     if (saldo < totalPrice) {
       alert("Saldo tidak mencukupi!");

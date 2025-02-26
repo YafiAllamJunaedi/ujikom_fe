@@ -1,12 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getAllTransaction } from "../../services/TransactionService.js";
+import { formatCurrency } from "../../additional/Currency.js";
 import LeftSide from "../../components/LeftSide.jsx";
 import Info from "../../components/Info.jsx";
 import { PiSneakerLight } from "react-icons/pi";
 import { GrTransaction } from "react-icons/gr";
 import { IoAnalyticsOutline } from "react-icons/io5";
-import ShoesData from "../../components/ShoesData.jsx";
+import TransactionData from "../../components/TransactionData.jsx";
+
 
 const TransactionDashboard = () => {
+  const [data, setData] = useState([]);
+
+  const fetchTransaction = async () => {
+    try {
+      const data = await getAllTransaction();
+      setData(data);
+    } catch (error) {
+      console.error("error fetching transaction", error)
+    }
+  };
+  useEffect(() => {
+    fetchTransaction()
+  }, [])
+  function TrimmedText(text, maxLength = 100) {
+    if (text.length <= maxLength) return text;
+    let trimmedText = text.substring(0, maxLength);
+    return trimmedText.substring(0, trimmedText.lastIndexOf(" ")) + "...";
+  }
+
   return (
     <div className="w-full flex bg-[#EEEEEE]">
       <LeftSide />
@@ -14,16 +36,9 @@ const TransactionDashboard = () => {
         <p className="font-bold text-3xl">Transaction History</p>
         <div className="w-full flex gap-x-7 mt-10">
           <Info
-            width="w-1/5"
-            title="Total Shoes"
-            logo={
-              <PiSneakerLight className="border-2 border-[#31363F] rounded-full size-8 p-1" />
-            }
-          />
-          <Info
             width="w-52"
             title="Total Transaction"
-            number="5"
+            number={data.length}
             logo={
               <GrTransaction className="border-2 border-[#31363F] rounded-full size-8 p-2" />
             }
@@ -56,7 +71,17 @@ const TransactionDashboard = () => {
               <p className="font-semibold text-sm">TOTAL</p>
             </div>
           </div>
-
+            {data?.map((item, index) => (
+              <TransactionData
+                key={index}
+                image={item.Sho.image}
+                title={TrimmedText(item.Sho.name, 22)}
+                name={item.User.name}
+                date={item.Date}
+                quantity={item.quantity}
+                total={formatCurrency(item.total)}
+              />
+            ))}
         </div>
       </div>
     </div>

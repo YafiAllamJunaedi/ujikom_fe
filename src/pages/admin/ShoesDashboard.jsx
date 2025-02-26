@@ -3,7 +3,6 @@ import { getAllShoes, addShoes, deleteShoes } from "../../services/ShoesService.
 import LeftSide from "../../components/LeftSide.jsx";
 import Info from "../../components/Info.jsx";
 import { PiSneakerLight } from "react-icons/pi";
-import { GrTransaction } from "react-icons/gr";
 import { IoAnalyticsOutline } from "react-icons/io5";
 import ShoesData from "../../components/ShoesData.jsx";
 import Modal from "../../components/Modal.jsx";
@@ -64,16 +63,9 @@ const ShoesDashboard = () => {
           <Info
             width="w-1/5"
             title="Total Shoes"
+            number={shoes.length}
             logo={
               <PiSneakerLight className="border-2 border-[#31363F] rounded-full size-8 p-1" />
-            }
-          />
-          <Info
-            width="w-52"
-            title="Total Transaction"
-            number="5"
-            logo={
-              <GrTransaction className="border-2 border-[#31363F] rounded-full size-8 p-2" />
             }
           />
           <Info
