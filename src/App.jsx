@@ -4,7 +4,6 @@ import { formatCurrency } from "./additional/Currency.js";
 import { getAllShoes } from "./services/ShoesService.js";
 import Countdown from "react-countdown";
 import discount from "./data/discount.js";
-// import collection from "./data/collection.js";
 import Card from "./components/Card.jsx";
 import model1 from "/assets/model1.jpg";
 import model2 from "/assets/model2.jpg";

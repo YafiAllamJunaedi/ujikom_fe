@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { loginUser } from "../../services/UserService.js";
+import { loginAdmin } from "../../services/AdminService.js";
 import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
@@ -14,25 +15,38 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await loginUser(email, password);
-      console.log("Full Response:", response);
-      console.log("Response Data:", response.data);
-      if (response && response.id) {
+      const userResponse = await loginUser(email, password);
+      console.log("User Login Response:", userResponse);
+
+      if (userResponse && userResponse.id) {
         const userData = {
-          id: response.id,
-          name: response.name,
-          email: response.email,
-          saldo: response.saldo,
+          id: userResponse.id,
+          name: userResponse.name,
+          email: userResponse.email,
+          saldo: userResponse.saldo,
         };
         localStorage.setItem("user", JSON.stringify(userData));
         alert("Login Berhasil");
-        navigate("/account");
-      } else {
-        throw new Error("Login gagal, data user tidak ditemukan.");
+        navigate("/");
+        return;
       }
     } catch (err) {
-      setError(err.message || "Login gagal");
+      console.log("Login User Gagal, mencoba login sebagai admin...");
+    }
+
+    try {
+      const adminResponse = await loginAdmin(email, password);
+      console.log("Admin Login Response:", adminResponse);
+
+      if (adminResponse && adminResponse.id) {
+        alert("Login Berhasil");
+        navigate("/shoes");
+        return;
+      }
+    } catch (err) {
+      setError("Login gagal, data tidak ditemukan.");
     }
   };
 
@@ -89,7 +103,9 @@ const LoginPage = () => {
               </Link>
             </p>
             <div className="flex mt-5 items-center gap-x-2">
-              <Link to="/" className="text-sm font-semibold underline">Back</Link>
+              <Link to="/" className="text-sm font-semibold underline">
+                Back
+              </Link>
             </div>
           </div>
         </div>
